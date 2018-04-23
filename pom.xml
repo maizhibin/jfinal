@@ -4,12 +4,13 @@
 	<artifactId>jfinal</artifactId>
 	<packaging>jar</packaging>
 	<name>JFinal</name>
-	<version>1.9-SNAPSHOT</version>
+	<version>3.3</version>
 	<url>http://www.jfinal.com</url>
 	<description>JFinal is a simple, light, rapid,independent, extensible Java WEB + ORM framework. The feature of JFinal looks like ruby on rails especially ActiveRecord.</description>
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
 	</properties>
 	
 	<issueManagement>
@@ -27,7 +28,7 @@
 			<id>jfinal</id>
 			<name>James</name>
 			<email>jfinal@126.com</email>
-			<url>http://weibo.com/jfinal</url>
+			<url>http://jfinal.com/user/1</url>
 		</developer>
 	</developers>
 	<scm>
@@ -57,23 +58,41 @@
 			<version>8.1.8</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
+		<!-- dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency -->
+		<!-- jsp support by jetty -->
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-jsp</artifactId>
+			<version>8.1.8.v20121106</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- cos -->
 		<dependency>
-			<groupId>c3p0</groupId>
+			<groupId>com.mchange</groupId>
 			<artifactId>c3p0</artifactId>
-			<version>0.9.1.2</version>
+			<version>0.9.5.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
-			<version>1.0.5</version>
+			<version>1.0.29</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.31</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP-java6</artifactId>
+			<version>2.3.13</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -89,12 +108,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet.jsp.jstl</groupId>
-			<artifactId>javax.servlet.jsp.jstl-api</artifactId>
-			<version>1.2.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
@@ -107,54 +120,126 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>3.2.4.RELEASE</version>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-tools</artifactId>
+			<version>2.0</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- cos -->
 		<dependency>
 			<groupId>com.jfinal</groupId>
 			<artifactId>cos</artifactId>
-			<version>26Dec2008</version>
+			<version>2017.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+			<version>3.2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.7.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>de.ruedigermoeller</groupId>
+			<artifactId>fst</artifactId>
+			<version>2.29</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!--
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.44</version>
+			<scope>provided</scope>
+		</dependency>
+		-->
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.4.3</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>it.sauronsoftware.cron4j</groupId>
+			<artifactId>cron4j</artifactId>
+			<version>2.2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>3.2.1</version>
+			<scope>provided</scope>
+		 </dependency>
+		 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>4.3.8.RELEASE</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	
 	<build>
-		<sourceDirectory>${project.basedir}/src</sourceDirectory>
-		<testSourceDirectory>${project.basedir}/test</testSourceDirectory>
-
+	
 		<resources>
 			<resource>
-				<directory>${project.basedir}/src</directory>
+				<directory>src/main/java</directory>
+				<includes>
+					<!-- **/* 写法，可以将各级子目录下的资源文件被打包 -->
+					<include>**/*.jf</include>
+				</includes>
 				<filtering>false</filtering>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
 			</resource>
 		</resources>
-		<testResources>
-			<testResource>
-				<directory>${project.basedir}/test</directory>
-				<filtering>false</filtering>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</testResource>
-		</testResources>
-		<!-- directory>${project.basedir}/target</directory -->
-	    <directory>${project.basedir}/webapp/WEB-INF/target</directory><!-- vi -->
 		
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5</version>
+				<version>3.6.1</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.3</version>
+				<configuration>
+					<!-- 解决 java8  发布到 maven 异常 -->
+					<additionalparam>-Xdoclint:none</additionalparam>
+					<encoding>UTF-8</encoding>
+					<outputDirectory>${basedir}</outputDirectory>
+					<reportOutputDirectory>${basedir}</reportOutputDirectory>
+				</configuration>
+			</plugin>
+
+<!-- 安装源码到本地仓库 -->
+<plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-source-plugin</artifactId>
+	<version>2.1.2</version>
+	<executions>
+		<execution>
+			<id>attach-sources</id>
+			<phase>verify</phase>
+			<goals>
+				<goal>jar-no-fork</goal>
+			</goals>
+		</execution>
+	</executions>
+</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -170,7 +255,7 @@
 				  </execution>
 				</executions>
 				<configuration>
-					<skip>false</skip>
+					<skip>true</skip>
 				</configuration>
 			</plugin>
 
